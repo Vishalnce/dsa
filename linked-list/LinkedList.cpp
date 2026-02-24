@@ -18,37 +18,6 @@ void print( Node* head){
 
 
 
-Node* takeInput(){
-
-  int data;
-  cin >> data;
-
-  Node * head = NULL;
-  Node * tail = NULL;
-
-
-  while( data != -1){
-    
-    Node* newNode = new Node(data);
-
-    if( head == NULL){
-      head = newNode;
-      tail = newNode;
-
-    } else {
-      tail -> next = newNode;
-      tail = tail-> next;
-    }
-
-    cin >> data;
-
-
-  }
-
-  return head;
-
-
-}
 
 Node* insertNode(Node* head ,int i,int data){
 
@@ -232,6 +201,37 @@ void printRev(Node * head){
 
 }
 
+Node* takeInput(){
+
+  int data;
+  cin >> data;
+
+  Node * head = NULL;
+  Node * tail = NULL;
+
+
+  while( data != -1){
+    
+    Node* newNode = new Node(data);
+
+    if( head == NULL){
+      head = newNode;
+      tail = newNode;
+
+    } else {
+      tail -> next = newNode;
+      tail = tail-> next;
+    }
+
+    cin >> data;
+
+
+  }
+
+  return head;
+
+
+}
 
 int main(){
   
