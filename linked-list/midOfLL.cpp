@@ -3,6 +3,13 @@ using namespace std;
 
 #include "Node.cpp"
 
+class Pair
+{
+public:
+  Node *head;
+  Node *tail;
+};
+
 Node *takeInput()
 {
 
@@ -63,7 +70,7 @@ Node *middleLL(Node *head)
   return slow;
 }
 
-Node *mergeTwo(Node *h1, Node *h2)  // importan question
+Node *mergeTwo(Node *h1, Node *h2) // importan question
 {
 
   Node *fh = NULL;
@@ -139,14 +146,215 @@ Node *mergeSort(Node *head)
   return final;
 }
 
+Node *reverseLL(Node *head)
+{
+
+  if (head == NULL || head->next == NULL)
+  {
+    return head;
+  }
+
+  Node *temp = reverseLL(head->next);
+  Node *a = temp;
+  while (a->next != NULL)
+  {
+    a = a->next;
+  }
+  a->next = head;
+
+  a->next->next = NULL;
+
+  return temp;
+}
+
+Pair reverseLL2(Node *head)
+{
+
+  if (head == NULL || head->next == NULL)
+  {
+    Pair ans;
+    ans.head = head;
+    ans.tail = head;
+    return ans;
+  }
+
+  Pair temp = reverseLL2(head->next);
+
+  temp.tail->next = head;
+  head->next = NULL;
+  Pair ans;
+  ans.head = temp.head;
+  ans.tail = head;
+
+  return ans;
+}
+
+
+
+Node *evenOdd(Node *head)
+{
+
+  Node *oh = NULL;
+  Node *ot = NULL;
+  Node *eh = NULL;
+  Node *et = NULL;
+
+  while (head != NULL)
+  {
+
+    if ((head->data) % 2 == 0)
+    {
+      if (oh == NULL)
+      {
+        oh = head;
+        ot = head;
+        head = head->next;
+      }
+      else
+      {
+        ot->next = head;
+        ot = ot->next;
+        head = head->next;
+      }
+    }
+    else
+    {
+      if (eh == NULL)
+      {
+        eh = head;
+        et = head;
+        head = head->next;
+      }
+      else
+      {
+        et->next = head;
+        et = et->next;
+        head = head->next;
+      }
+    }
+  }
+
+  if (ot != NULL)
+    ot->next = NULL;
+  if (et != NULL)
+    et->next = NULL;
+
+  if (ot != NULL && eh != NULL)
+  {
+    ot->next = eh;
+    return oh;
+  }
+
+  if (ot == NULL)
+  {
+    return eh;
+  }
+
+  if (eh == NULL)
+  {
+    return oh;
+  }
+
+  return NULL;
+}
+
+
+void skipMandNNode(Node* head,int m,int n){  // Important question
+
+    if(head == NULL || m <= 0) return;
+
+
+  Node *t1 =head;
+  Node *t2 =NULL;
+
+
+  while(t1!=NULL ){
+     for(int i =1 ; i<m && t1!=NULL;i++){
+    t1=t1->next;
+  }
+
+   if(t1 == NULL) break;
+  t2= t1->next;
+  
+ 
+
+  for(int i =0 ; i<n && t2!=NULL;i++){
+    Node * a = t2;
+    t2=t2->next;
+    delete a;
+  }
+
+ 
+
+  t1->next=t2;
+  t1=t2;
+
+
+
+
+  }
+ 
+
+
+}
+
+
+Node* kRev(Node* head,int k){ // good question 
+
+  if(head == NULL || head->next  ==NULL || k<=1){
+    return head ;
+  }
+
+
+  Node * h = head;
+  Node * a =head;;
+  Node * t = NULL;
+
+   for(int i =1;i<k && a!=NULL;i++){
+    a= a->next;
+
+   }
+
+   if(a == NULL)    // importanta
+    return head;
+   t=a;
+
+  
+   Node * h2 = t->next;
+   t->next =NULL;
+
+   Pair temp = reverseLL2(h);
+
+   Node * temp1 = kRev(h2,k);
+
+   temp.tail->next= temp1;
+
+
+   return temp.head;
+
+
+
+
+
+
+}
+
+
+
+
+
 int main()
 {
 
   Node *head = takeInput();
 
-   Node *head2 = takeInput();
+  // skipMandNNode(head, 2, 3);
 
-   print(mergeTwo(head, head2));
+  print(kRev(head,3));
+
+  //  Node *head2 = takeInput();
+
+  //  print(mergeTwo(head, head2));
 
   // print(mergeSort(head));
 
