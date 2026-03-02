@@ -256,15 +256,79 @@ int countLeaf( TreeNode<int> *root){
 }
 
 
+int  nextLarger(TreeNode<int> *root,int x) {
+
+  if(root == NULL){
+    return -1;
+
+  }
+
+  int ans = -1 ;
+
+  if(root->data > x){
+    ans = root->data;
+
+  }
+
+  for(int i =0;i<root->children.size();i++){
+    int temp = nextLarger(root->children[i],x);
+
+    if (temp == -1) {
+            continue;   
+    }
+
+    if(ans == -1 || ans>temp){
+      ans=temp;
+
+    }
+
+  }
+
+  return ans;
+
+
+
+
+}
+
+
+
+void helperDepth(TreeNode<int> *root, int depth){
+
+  if (root == NULL){
+    return ;
+
+  }
+
+  root->data = depth;
+
+  for(int i =0 ;i<root->children.size();i++){
+
+    helperDepth(root->children[i],depth+1);
+
+  }
+
+}
+
+void depth(TreeNode<int> * root){
+
+ helperDepth(root,0);
+
+}
+ 
+
 int main()
 {
 
   TreeNode<int> *root = takeInputLevelWise();
+  depth(root);
+ 
+  printTree(root);
 
-  Pair<int> temp = nodeWithMax(root);
+  // Pair<int> temp = nodeWithMax(root);
 
-  cout<<temp.ptr->data<<endl;
-  cout<<temp.sum<<endl;
+  // cout<<temp.ptr->data<<endl;
+  // cout<<temp.sum<<endl;
 
 
   // cout << countNodes(root);
