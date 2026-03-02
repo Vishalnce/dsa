@@ -3,6 +3,7 @@ using namespace std;
 
 #include "TreeNode.h"
 #include <queue>
+#include "Pair.h"
 
 void printTree(TreeNode<int> *root)
 {
@@ -102,6 +103,47 @@ void deleteTree(TreeNode<int> * root){
   }
   delete root;
 }
+
+Pair<int> nodeWithMax(TreeNode<int> * root){
+
+  if( root ==NULL ){
+    Pair <int> ans;
+    ans.ptr =NULL;
+    ans.sum=0;
+  
+    return ans;
+  }
+
+
+  Pair<int> temp;
+
+  temp.ptr = root;
+  temp.sum=0;
+
+  for(int i =0;i<root->children.size();i++){
+    temp.sum =temp.sum + (root->children[i])->data;
+  }
+  temp.sum += root->data;
+
+  for(int i =0;i<root->children.size();i++){
+    Pair<int> t1=  nodeWithMax(root->children[i]);
+
+    if(t1.sum>temp.sum){
+      temp.sum = t1.sum;
+      temp.ptr = t1.ptr;
+    }
+
+  }
+
+  
+
+  return temp;
+
+
+
+
+}
+
 
 
 TreeNode<int> *takeInputLevelWise()
@@ -219,10 +261,16 @@ int main()
 
   TreeNode<int> *root = takeInputLevelWise();
 
+  Pair<int> temp = nodeWithMax(root);
+
+  cout<<temp.ptr->data<<endl;
+  cout<<temp.sum<<endl;
+
+
   // cout << countNodes(root);
-  printAtLevelK(root,2);
+  // printAtLevelK(root,2);
   // cout<< height(root);
-  cout<<countLeaf(root);
+  // cout<<countLeaf(root);
 
   // delete Root // THis alos waorks as it will call the destructor
   return 0;
